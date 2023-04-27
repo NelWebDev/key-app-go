@@ -1,8 +1,7 @@
 package main
 
 import (
-    "internal/db"
-
+    "key-app-go/internal/db"
 )
 
 func main() {
