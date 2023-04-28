@@ -1,33 +1,26 @@
 package db
 
 import (
+
     "fmt"
-    "log"
-    "gorm.io/gorm"
+    "github.com/jinzhu/gorm"
     "key-app-go/internal/model"
-    "github.com/go-sql-driver/mysql"
-     "github.com/jinzhu/gorm"
+        _ "github.com/go-sql-driver/mysql"
 )
 
 func AutoMigrate() error {
-
-    dbHost := "172.17.0.1"
-    dbPort := "3305"
-    dbName := "keyd"
-    dbUser := "keyuser"
-    dbPassword := "keypassword"
-
-    dbURI := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", dbUser, dbPassword, dbHost, dbPort, dbName)
-
-    db, err := gorm.Open("mysql", dbURI)
+    db, err := gorm.Open("mysql", "keyuser:keypassword@tcp(172.23.0.2:3305)/keydb?charset=utf8mb4&parseTime=True&loc=Local")
     if err != nil {
-        log.Fatalf("failed to connect database: %v", err)
+        return fmt.Errorf("error al conectar a la BD: %v", err)
     }
-    defer db.Close()
 
-    db.AutoMigrate(&model.Key{})
-    db.AutoMigrate(&model.User{})
+    if err := db.AutoMigrate(&model.Key{}, &model.User{}).Error; err != nil {
+        return fmt.Errorf("error al migrar los modelos: %v", err)
+    }
 
-    log.Println("Migration has been successfully completed!")
 
+    fmt.Println("Migraciones realizadas con éxito")
+    return nil
 }
+
+
