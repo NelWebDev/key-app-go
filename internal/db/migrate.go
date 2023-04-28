@@ -9,7 +9,7 @@ import (
 )
 
 func AutoMigrate() error {
-    db, err := gorm.Open("mysql", "keyuser:keypassword@tcp(172.23.0.2:3305)/keydb?charset=utf8mb4&parseTime=True&loc=Local")
+    db, err := gorm.Open("mysql", "keyuser:keypassword@tcp(172.23.0.2:3305)/db?charset=utf8mb4&parseTime=True&loc=Local")
     if err != nil {
         return fmt.Errorf("error al conectar a la BD: %v", err)
     }
