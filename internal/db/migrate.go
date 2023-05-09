@@ -19,7 +19,7 @@ func AutoMigrate() error {
     }
 
 
-    fmt.Println("Migraciones realizada con mucho éxito")
+    fmt.Println("Migraciones realizadass con éxito")
     return nil
 }
 
